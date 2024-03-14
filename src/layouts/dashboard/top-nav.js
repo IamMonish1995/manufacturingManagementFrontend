@@ -11,6 +11,7 @@ import {
   Stack,
   SvgIcon,
   Tooltip,
+  Typography,
   useMediaQuery
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
@@ -58,7 +59,7 @@ export const TopNav = (props) => {
             direction="row"
             spacing={2}
           >
-            {!lgUp && (
+            {!lgUp && ( 
               <IconButton onClick={onNavOpen}>
                 <SvgIcon fontSize="small">
                   <Bars3Icon />
@@ -66,11 +67,6 @@ export const TopNav = (props) => {
               </IconButton>
             )}
             <Tooltip title="Search">
-              <IconButton>
-                <SvgIcon fontSize="small">
-                  <MagnifyingGlassIcon />
-                </SvgIcon>
-              </IconButton>
             </Tooltip>
           </Stack>
           <Stack

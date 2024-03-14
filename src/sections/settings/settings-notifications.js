@@ -21,7 +21,7 @@ export const SettingsNotifications = () => {
     []
   );
 
-  return (
+  return ( 
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader

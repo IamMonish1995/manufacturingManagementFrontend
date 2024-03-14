@@ -11,7 +11,7 @@ const Page = () => (
         Settings | Devias Kit
       </title>
     </Head>
-    <Box
+    <Box 
       component="main"
       sx={{
         flexGrow: 1,
