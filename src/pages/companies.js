@@ -5,73 +5,33 @@ import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import {
   Box,
   Button,
+  Card,
   Container,
-  Pagination,
   Stack,
   SvgIcon,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TextField,
   Typography,
-  Unstable_Grid2 as Grid
-} from '@mui/material';
+} from "@mui/material";
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CompanyCard } from 'src/sections/companies/company-card';
 import { CompaniesSearch } from 'src/sections/companies/companies-search';
-
-const companies = [
-  {
-    id: '2569ce0d517a7f06d3ea1f24',
-    createdAt: '27/03/2019',
-    description: 'Dropbox is a file hosting service that offers cloud storage, file synchronization, a personal cloud.',
-    logo: '/assets/logos/logo-dropbox.png',
-    title: 'Dropbox',
-    downloads: '594'
-  },
-  {
-    id: 'ed2b900870ceba72d203ec15',
-    createdAt: '31/03/2019',
-    description: 'Medium is an online publishing platform developed by Evan Williams, and launched in August 2012.',
-    logo: '/assets/logos/logo-medium.png',
-    title: 'Medium Corporation',
-    downloads: '625'
-  },
-  {
-    id: 'a033e38768c82fca90df3db7',
-    createdAt: '03/04/2019',
-    description: 'Slack is a cloud-based set of team collaboration tools and services, founded by Stewart Butterfield.',
-    logo: '/assets/logos/logo-slack.png',
-    title: 'Slack',
-    downloads: '857'
-  },
-  {
-    id: '1efecb2bf6a51def9869ab0f',
-    createdAt: '04/04/2019',
-    description: 'Lyft is an on-demand transportation company based in San Francisco, California.',
-    logo: '/assets/logos/logo-lyft.png',
-    title: 'Lyft',
-    downloads: '406'
-  },
-  {
-    id: '1ed68149f65fbc6089b5fd07',
-    createdAt: '04/04/2019',
-    description: 'GitHub is a web-based hosting service for version control of code using Git.',
-    logo: '/assets/logos/logo-github.png',
-    title: 'GitHub',
-    downloads: '835'
-  },
-  {
-    id: '5dab321376eff6177407e887',
-    createdAt: '04/04/2019',
-    description: 'Squarespace provides software as a service for website building and hosting. Headquartered in NYC.',
-    logo: '/assets/logos/logo-squarespace.png',
-    title: 'Squarespace',
-    downloads: '835'
-  }
-];
+import { DatePicker } from '@mui/x-date-pickers';
+import { Scrollbar } from 'src/components/scrollbar';
+import FreeSoloCreateOptionDialog from 'src/components/AutoComplet';
+// import { DatePicker } from "@mui/x-date-pickers";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Page = () => (
   <>
     <Head>
       <title>
-        Companies | Devias Kit
+      Dispatch
       </title>
     </Head>
     <Box
@@ -81,84 +41,245 @@ const Page = () => (
         py: 8
       }}
     >
-      <Container maxWidth="xl">
-        <Stack spacing={3}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            spacing={4}
-          >
+           <Container maxWidth="xl">
+      <Stack direction="row" marginBottom={6} justifyContent="space-between" spacing={4}>
             <Stack spacing={1}>
-              <Typography variant="h4">
-                Companies
-              </Typography>
-              <Stack
-                alignItems="center"
-                direction="row"
-                spacing={1}
-              >
-                <Button
-                  color="inherit"
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <ArrowUpOnSquareIcon />
-                    </SvgIcon>
-                  )}
-                >
-                  Import
-                </Button>
-                <Button
-                  color="inherit"
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <ArrowDownOnSquareIcon />
-                    </SvgIcon>
-                  )}
-                >
-                  Export
-                </Button>
-              </Stack>
+              <Typography variant="h4">Dispatch</Typography>
             </Stack>
-            <div>
-              <Button
-                startIcon={(
-                  <SvgIcon fontSize="small">
-                    <PlusIcon />
-                  </SvgIcon>
-                )}
-                variant="contained"
-              >
-                Add
-              </Button>
-            </div>
           </Stack>
-          <CompaniesSearch />
-          <Grid
-            container
-            spacing={3}
-          >
-            {companies.map((company) => (
-              <Grid
-                xs={12}
-                md={6}
-                lg={4}
-                key={company.id}
-              >
-                <CompanyCard company={company} />
-              </Grid>
-            ))}
-          </Grid>
+        
+        <Stack spacing={2}>
+         
+        <div style={{display:'flex' , justifyContent:"space-between", flexDirection:"column"}} >
+          <div spacing={2} style={{display:"flex" , flexDirection:"row" , alignItems:"center" , marginBottom:5 , gap:15 }}>
+        <TextField  id="outlined-basic"  label="Enter Distributor name" variant="outlined"/>
+        <TextField id="outlined-basic" label="Enter Challan Number" variant="outlined"  />
+        </div>
+        <div  style={{gap:15, display:"flex"}}>
+        <TextField id="outlined-basic" label="Enter Sub-Distributor name" variant="outlined"  />
+        <TextField id="outlined-basic" label="Dispatch No." variant="outlined"  />
+        <DatePicker label="Select Date"/>
+        </div>
+        {/*  */}
+        </div>
+
+          <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
+            <Typography variant="h6">Add Items For Sub Distributor  Order</Typography>
+          </div>
+          {/*  */}
+          <Card>
+            <Scrollbar>
+              <Box sx={{ minWidth: 800 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Design Code</TableCell>
+                      <TableCell>28</TableCell>
+                      <TableCell>30</TableCell>
+                      <TableCell>32</TableCell>
+                      <TableCell>34</TableCell>
+                      <TableCell>36</TableCell>
+                      <TableCell>38</TableCell>
+                      <TableCell>40</TableCell>
+                      <TableCell>42</TableCell>
+                      <TableCell>44</TableCell>
+                      <TableCell>46</TableCell>
+                      <TableCell>48</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow hover>
+                      <TableCell>
+                        <Stack alignItems="center" direction="row" spacing={2}>
+                          <Typography variant="subtitle2">
+                            <FreeSoloCreateOptionDialog />
+                          </Typography>
+                        </Stack>
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          id="standard-number"
+                          placeholder="0"
+                          variant="standard"
+                          style={{ fontSize: "0.20rem" }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </Box>
+            </Scrollbar>
+          </Card>
+          {/*  */}
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            {/* <ItemSearch />{" "} */}
+            <Button
+              startIcon={
+                <SvgIcon fontSize="small">
+                  <PlusIcon />
+                </SvgIcon>
+              }
+              variant="contained"
+            >
+              Add Item
+            </Button>
+          </div>
+
           <Box
+            component="main"
             sx={{
-              display: 'flex',
-              justifyContent: 'center'
+              flexGrow: 1,
+              // py: 2,
             }}
           >
-            <Pagination
-              count={3}
-              size="small"
-            />
+            <Card>
+              <Scrollbar>
+                <Box sx={{ minWidth: 800 }}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Design Code</TableCell>
+                        <TableCell>28</TableCell>
+                        <TableCell>30</TableCell>
+                        <TableCell>32</TableCell>
+                        <TableCell>34</TableCell>
+                        <TableCell>36</TableCell>
+                        <TableCell>38</TableCell>
+                        <TableCell>40</TableCell>
+                        <TableCell>42</TableCell>
+                        <TableCell>44</TableCell>
+                        <TableCell>46</TableCell>
+                        <TableCell>48</TableCell>
+                        <TableCell>Delet</TableCell>
+                        
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow hover>
+                        <TableCell>
+                          <Stack alignItems="center" direction="row" spacing={2}>
+                            <Typography variant="subtitle2">XYZ</Typography>
+                          </Stack>
+                        </TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>0</TableCell>
+                        <Button>
+                        <DeleteIcon/>
+                        </Button>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Box>
+              </Scrollbar>
+              <TablePagination
+                component="div"
+                count={5}
+                onPageChange={10}
+                onRowsPerPageChange={4}
+                page={12}
+                rowsPerPage={5}
+                rowsPerPageOptions={[5, 10, 25]}
+              />
+            </Card>
           </Box>
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            {/* <ItemSearch />{" "} */}
+            <Button
+              
+              variant="contained"
+            >
+              Print Invoice
+            </Button>
+          </div>
         </Stack>
       </Container>
     </Box>
