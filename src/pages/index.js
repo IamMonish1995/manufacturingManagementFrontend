@@ -27,6 +27,8 @@ import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { CustomersSearch } from "src/sections/customer/customers-search";
 import FreeSoloCreateOptionDialog from "src/components/AutoComplet";
 import { ItemSearch } from "src/components/Search";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const now = new Date();
 
@@ -211,6 +213,7 @@ const Page = () => (
                           <TableCell>44</TableCell>
                           <TableCell>46</TableCell>
                           <TableCell>48</TableCell>
+                          <TableCell>DELET</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -231,6 +234,9 @@ const Page = () => (
                           <TableCell>0</TableCell>
                           <TableCell>0</TableCell>
                           <TableCell>0</TableCell>
+                          <Button>
+                        <DeleteIcon/>
+                        </Button>
                         </TableRow>
                       </TableBody>
                     </Table>
