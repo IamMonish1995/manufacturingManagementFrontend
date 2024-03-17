@@ -23,7 +23,7 @@ import { CompanyCard } from 'src/sections/companies/company-card';
 import { CompaniesSearch } from 'src/sections/companies/companies-search';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Scrollbar } from 'src/components/scrollbar';
-import FreeSoloCreateOptionDialog from 'src/components/AutoComplet';
+import FreeSoloCreateOptionDialog from 'src/components/ItemFindOrCreateAutoComplete';
 // import { DatePicker } from "@mui/x-date-pickers";
 import DeleteIcon from '@mui/icons-material/Delete';
 

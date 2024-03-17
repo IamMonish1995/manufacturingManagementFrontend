@@ -20,7 +20,7 @@ import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { applyPagination } from "src/utils/apply-pagination";
 import { Scrollbar } from "src/components/scrollbar";
-import FreeSoloCreateOptionDialog from "src/components/AutoComplet";
+import FreeSoloCreateOptionDialog from "src/components/ItemFindOrCreateAutoComplete";
 import { ItemSearch } from "src/components/Search";
 import { DatePicker } from "@mui/x-date-pickers";
 import DeleteIcon from '@mui/icons-material/Delete';
