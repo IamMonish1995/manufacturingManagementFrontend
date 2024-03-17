@@ -13,3 +13,14 @@ export const getcurruntstock = async () =>
         console.log(error);
     }
 };
+export const saveinventory = async (data) =>
+ {
+    try {
+        const res = await axios.post(`${MAIN_URL}/saveinventory`,data);
+        return res?.data;
+    } 
+    catch (error)
+    {
+        console.log(error);
+    }
+};

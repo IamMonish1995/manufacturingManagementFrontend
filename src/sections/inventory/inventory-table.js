@@ -16,13 +16,18 @@ import {
 import { UseConstants } from "src/contexts/constants-context";
 
 export const InventoryTable = (props) => {
-  const { count = 0, page = 0, rowsPerPage = 0, rows = [], curruntStock } = props;
+  const {
+    count = 0,
+    page = 0,
+    rowsPerPage = 0,
+    rows = [],
+    curruntStock,
+    onPageChange,
+    onRowsPerPageChange,
+  } = props;
 
   const { sizes } = UseConstants();
 
-  const noop = () => {
-    // do nothing
-  };
   return (
     <Card>
       <Box sx={{ overflowX: "auto" }}>
@@ -36,13 +41,12 @@ export const InventoryTable = (props) => {
           </TableHead>
           <TableBody>
             {curruntStock &&
-              rows?.map((row, key) => {
+              rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, key) => {
                 return (
                   <TableRow hover key={key}>
                     <TableCell>
                       <Typography variant="subtitle2">{row?.item?.itemcode}</Typography>
                     </TableCell>
-
                     {row?.sizes &&
                       row?.sizes?.map((item, key) => <TableCell key={key}>{item?.qty}</TableCell>)}
                     <TableCell>{row?.totalqty}</TableCell>
@@ -68,11 +72,11 @@ export const InventoryTable = (props) => {
       <TablePagination
         component="div"
         count={count}
-        onPageChange={noop}
-        onRowsPerPageChange={noop}
         page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
+        onPageChange={onPageChange}
+        onRowsPerPageChange={onRowsPerPageChange}
       />
     </Card>
   );
