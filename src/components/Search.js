@@ -1,25 +1,28 @@
-import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
-import { Card, InputAdornment, OutlinedInput, SvgIcon } from '@mui/material';
+import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
+import { Card, IconButton, InputAdornment, OutlinedInput, SvgIcon } from "@mui/material";
 
-export const ItemSearch = () => (
-
-<>
+export const ItemSearch = ({ chalanNumber, setChalanNumber ,handleSearch}) => (
+  <>
     <OutlinedInput
-      defaultValue=""
+      value={chalanNumber}
+      onChange={(e)=>setChalanNumber(e.target.value)}
       fullWidth
-      placeholder="Search Design Code"
-      startAdornment={(
-        <InputAdornment position="start">
-          <SvgIcon
-            color="action"
-            fontSize="small"
+      placeholder="Search Chalan Number"
+      endAdornment={
+        <InputAdornment position="end">
+          <IconButton
+            disabled={!chalanNumber}
+            aria-label="toggle password visibility"
+            onClick={()=>handleSearch(chalanNumber)}
+            edge="end"
           >
+          <SvgIcon color="action" fontSize="small">
             <MagnifyingGlassIcon />
           </SvgIcon>
+          </IconButton>
         </InputAdornment>
-      )}
+      }
       sx={{ maxWidth: 300 }}
     />
-    </>
- 
+  </>
 );

@@ -37,8 +37,8 @@ const ItemSizeForm = ({ addFunction }) => {
 
     toast.promise(addFunction(date, itemID, sizeQtyData), {
       loading: "Saving...",
-      success: <b>Item saved!</b>,
-      error: <b>Could not save.</b>,
+      success: <b>Saved Successfully!</b>,
+      error: <b>Could Not Save Please Check Input Values!!!!</b>,
     });
     
   };
