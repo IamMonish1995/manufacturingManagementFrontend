@@ -34,6 +34,7 @@ export const OrdersTable = (props) => {
         <Table sx={{ minWidth: "800px" }}>
           <TableHead>
             <TableRow>
+              <TableCell>Distributor</TableCell>
               <TableCell>Item Code</TableCell>
               {sizes && sizes.map((item, key) => <TableCell key={key}>{item?.name}</TableCell>)}
               <TableCell>Total</TableCell>
@@ -45,6 +46,9 @@ export const OrdersTable = (props) => {
                 return (
                   <TableRow hover key={key}>
                     <TableCell>
+                      <Typography variant="subtitle2">{row?.distributor}</Typography>
+                    </TableCell>
+                    <TableCell>
                       <Typography variant="subtitle2">{row?.item?.itemcode}</Typography>
                     </TableCell>
                     {row?.sizes &&
@@ -54,15 +58,14 @@ export const OrdersTable = (props) => {
                 );
               })}
             <TableRow>
-              <TableCell>Grand Total : {orderStock?.grantTotal}</TableCell>
+              <TableCell colSpan={2}>Grand Total : {orderStock?.grantTotal}</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell>
-                <Button>Print</Button>
+              <TableCell colSpan={2}>
+                <Button>Print Purchase Order</Button>
               </TableCell>
             </TableRow>
           </TableBody>

@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { ItemSearch } from "src/components/Search";
 import { useCallback, useEffect, useState } from "react";
-import { getcurruntstock, saveinventory } from "request/curruntStock";
 import ItemSizeForm from "src/sections/inventory/itemSizeForm";
 import DistributorFindOrCreateAutoComplete from "src/components/disctributorFindOrCreateAutoComplete";
 import { OrdersTable } from "src/sections/orders/orders-table";
@@ -149,6 +148,14 @@ const Page = () => {
     });
   };
 
+  useEffect(() => {
+    const debounceId = setTimeout(() => {
+      getOrderByChalanData(chalanNumber);
+    }, 800);
+    return () => {
+      clearTimeout(debounceId);
+    };
+  }, [chalanNumber,isRtlOrder]);
   return (
     <>
       <Box

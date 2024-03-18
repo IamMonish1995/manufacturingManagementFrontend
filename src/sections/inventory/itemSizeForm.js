@@ -39,8 +39,7 @@ const ItemSizeForm = ({ addFunction }) => {
       loading: "Saving...",
       success: <b>Saved Successfully!</b>,
       error: <b>Could Not Save Please Check Input Values!!!!</b>,
-    });
-    
+    }); 
   };
   const onInputChange = (e) => {
     let sizeID = e.target.name;
