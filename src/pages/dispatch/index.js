@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import ItemSizeForm from "src/sections/inventory/itemSizeForm";
 import DistributorFindOrCreateAutoComplete from "src/components/disctributorFindOrCreateAutoComplete";
 import { getdispatchbychalannumber, savedispatch } from "request/dispatch";
-import { DispatchTable } from "src/sections/dispatch/orders-table";
+import { DispatchTable } from "src/sections/dispatch/dispatch-table";
 import SubDistributorFindOrCreateAutoComplete from "src/components/subdisctributorFindOrCreateAutoComplete";
 
 const Page = () => {
