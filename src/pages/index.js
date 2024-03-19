@@ -86,7 +86,16 @@ const Page = () => {
     });
     setFilteredData(tempArray);
   };
-
+  useEffect(() => {
+    if(searchText){
+      const debounceId = setTimeout(() => {
+        handleSearchItem(searchText);
+      }, 800);
+      return () => {
+        clearTimeout(debounceId);
+      };
+    }
+  }, [searchText]);
   return (
     <>
       <Box
