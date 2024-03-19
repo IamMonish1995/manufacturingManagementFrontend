@@ -214,7 +214,7 @@ const Page = () => {
               />{" "}
             </div>
             {/* Inventory Table */}
-            <OrdersTable
+            {filteredData.length > 0 && <OrdersTable
               orderStock={orderStock}
               count={filteredData.length}
               page={page}
@@ -222,7 +222,7 @@ const Page = () => {
               rowsPerPage={rowsPerPage}
               onPageChange={onPageChange}
               onRowsPerPageChange={onRowsPerPageChange}
-            />
+            />}
           </Stack>
         </Container>
       </Box>

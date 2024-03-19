@@ -25,7 +25,6 @@ const Page = () => {
     getcurruntstock().then((res) => {
       setCurruntStock(res.result);
       setFilteredData(res.result.items);
-      console.log(res.result.items);
     });
   };
 

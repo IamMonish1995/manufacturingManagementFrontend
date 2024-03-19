@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { UseConstants } from "src/contexts/constants-context";
+import { useEffect, useState } from "react";
 
 export const InventoryTable = (props) => {
   const {
@@ -28,6 +29,28 @@ export const InventoryTable = (props) => {
 
   const { sizes } = UseConstants();
 
+  const [sizeCount, setSizeCount] = useState([]);
+
+  useEffect(() => {
+    rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, key) => {
+      row?.sizes?.map((item, key2) => {
+        setSizeCount((prevData) => {
+          if (key == 0) {
+            return [...prevData, item.qty];
+          } else {
+            let oldArray = prevData;
+            let tempCount = prevData[`${key2}`] + item.qty;
+            oldArray[`${key2}`] = tempCount;
+            return oldArray;
+          }
+        });
+      });
+    });
+    return () => {
+      setSizeCount([]);
+    };
+  }, [rows]);
+
   return (
     <Card>
       <Box sx={{ overflowX: "auto" }}>
@@ -35,7 +58,10 @@ export const InventoryTable = (props) => {
           <TableHead>
             <TableRow>
               <TableCell>Item Code</TableCell>
-              {sizes && sizes.map((item, key) => <TableCell key={key}>{item?.name}</TableCell>)}
+              {sizes &&
+                sizes.map((item, key) => {
+                  return <TableCell key={key}>{item?.name}</TableCell>;
+                })}
               <TableCell>Total</TableCell>
             </TableRow>
           </TableHead>
@@ -54,16 +80,13 @@ export const InventoryTable = (props) => {
                 );
               })}
             <TableRow>
-              <TableCell>Grand Total : {curruntStock.grantTotal}</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
               <TableCell>
                 <Button>Print</Button>
               </TableCell>
+              {sizeCount?.map((item, key) => (
+                <TableCell key={key}>{item}</TableCell>
+              ))}
+              <TableCell>Total : {curruntStock.grantTotal}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

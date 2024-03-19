@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { UseConstants } from "src/contexts/constants-context";
+import { useEffect, useState } from "react";
 
 export const OrdersTable = (props) => {
   const {
@@ -27,7 +28,27 @@ export const OrdersTable = (props) => {
   } = props;
 
   const { sizes } = UseConstants();
+  const [sizeCount, setSizeCount] = useState([]);
 
+  useEffect(() => {
+    rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, key) => {
+      row?.sizes?.map((item, key2) => {
+        setSizeCount((prevData) => {
+          if (key == 0) {
+            return [...prevData, item.qty];
+          } else {
+            let oldArray = prevData;
+            let tempCount = prevData[`${key2}`] + item.qty;
+            oldArray[`${key2}`] = tempCount;
+            return oldArray;
+          }
+        });
+      });
+    });
+    return () => {
+      setSizeCount([]);
+    };
+  }, [rows]);
   return (
     <Card>
       <Box sx={{ overflowX: "auto" }}>
@@ -58,15 +79,13 @@ export const OrdersTable = (props) => {
                 );
               })}
             <TableRow>
-              <TableCell colSpan={2}>Grand Total : {orderStock?.grantTotal}</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
               <TableCell colSpan={2}>
                 <Button>Print Purchase Order</Button>
               </TableCell>
+              {sizeCount?.map((item, key) => (
+                <TableCell key={key}>{item}</TableCell>
+              ))}
+              <TableCell>Total : {orderStock.grantTotal}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
