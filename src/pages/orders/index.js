@@ -8,7 +8,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { ItemSearch } from "src/components/Search";
+import { ChalanSearch, ItemSearch } from "src/components/SearchChalan";
 import { useCallback, useEffect, useState } from "react";
 import ItemSizeForm from "src/sections/inventory/itemSizeForm";
 import DistributorFindOrCreateAutoComplete from "src/components/disctributorFindOrCreateAutoComplete";
@@ -207,7 +207,7 @@ const Page = () => {
             <ItemSizeForm addFunction={addOrder} />
             {/*  */}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <ItemSearch
+              <ChalanSearch
                 chalanNumber={chalanNumber}
                 setChalanNumber={setChalanNumber}
                 handleSearch={getOrderByChalanData}

@@ -1,10 +1,10 @@
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { Box, Stack, Container, Unstable_Grid2 as Grid, Typography } from "@mui/material";
-import { ItemSearch } from "src/components/Search";
 import { InventoryTable } from "src/sections/inventory/inventory-table";
 import { useCallback, useEffect, useState } from "react";
 import { getcurruntstock, saveinventory } from "request/curruntStock";
 import ItemSizeForm from "src/sections/inventory/itemSizeForm";
+import { ItemSearch } from "src/components/SearchItem";
 
 const Page = () => {
   const [curruntStock, setCurruntStock] = useState({ items: [], grantTotal: 0 });
@@ -12,6 +12,7 @@ const Page = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   const onPageChange = useCallback((event, value) => {
     setPage(value);
@@ -79,6 +80,13 @@ const Page = () => {
     getInventoryData();
   }, []);
 
+  const handleSearchItem = (searchStr) => {
+    let tempArray = curruntStock.items.filter((item) => {
+      return item.item?.itemcode.includes(searchStr);
+    });
+    setFilteredData(tempArray);
+  };
+
   return (
     <>
       <Box
@@ -99,7 +107,11 @@ const Page = () => {
             <ItemSizeForm addFunction={addInventory} />
             {/*  */}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <ItemSearch />{" "}
+              <ItemSearch
+                text={searchText}
+                setText={setSearchText}
+                handleSearch={handleSearchItem}
+              />
             </div>
             {/* Inventory Table */}
             <InventoryTable

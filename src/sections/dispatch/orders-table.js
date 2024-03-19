@@ -16,19 +16,18 @@ import {
 import { UseConstants } from "src/contexts/constants-context";
 import { useEffect, useState } from "react";
 
-export const InventoryTable = (props) => {
+export const DispatchTable = (props) => {
   const {
     count = 0,
     page = 0,
     rowsPerPage = 0,
     rows = [],
-    curruntStock,
+    dispatchStock,
     onPageChange,
     onRowsPerPageChange,
   } = props;
 
   const { sizes } = UseConstants();
-
   const [sizeCount, setSizeCount] = useState([]);
 
   useEffect(() => {
@@ -50,26 +49,26 @@ export const InventoryTable = (props) => {
       setSizeCount([]);
     };
   }, [rows]);
-
   return (
     <Card>
       <Box sx={{ overflowX: "auto" }}>
         <Table sx={{ minWidth: "800px" }}>
           <TableHead>
             <TableRow>
-              <TableCell>Design Code</TableCell>
-              {sizes &&
-                sizes.map((item, key) => {
-                  return <TableCell key={key}>{item?.name}</TableCell>;
-                })}
+              <TableCell>Distributor</TableCell>
+              <TableCell>Item Code</TableCell>
+              {sizes && sizes.map((item, key) => <TableCell key={key}>{item?.name}</TableCell>)}
               <TableCell>Total</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {curruntStock &&
+            {dispatchStock &&
               rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, key) => {
                 return (
                   <TableRow hover key={key}>
+                    <TableCell>
+                      <Typography variant="subtitle2">{row?.distributor}</Typography>
+                    </TableCell>
                     <TableCell>
                       <Typography variant="subtitle2">{row?.item?.itemcode}</Typography>
                     </TableCell>
@@ -80,13 +79,13 @@ export const InventoryTable = (props) => {
                 );
               })}
             <TableRow>
-              <TableCell>
-                <Button>Print</Button>
+              <TableCell colSpan={2}>
+                <Button>Print Invoice</Button>
               </TableCell>
               {sizeCount?.map((item, key) => (
                 <TableCell key={key}>{item}</TableCell>
               ))}
-              <TableCell>Total : {curruntStock.grantTotal}</TableCell>
+              <TableCell>Total : {dispatchStock.grantTotal}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -105,7 +104,7 @@ export const InventoryTable = (props) => {
   );
 };
 
-InventoryTable.propTypes = {
+DispatchTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

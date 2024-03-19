@@ -1,19 +1,19 @@
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 import { Card, IconButton, InputAdornment, OutlinedInput, SvgIcon } from "@mui/material";
 
-export const ItemSearch = ({ chalanNumber, setChalanNumber ,handleSearch}) => (
+export const ItemSearch = ({ text, setText ,handleSearch}) => (
   <>
     <OutlinedInput
-      value={chalanNumber}
-      onChange={(e)=>setChalanNumber(e.target.value)}
+      value={text}
+      onChange={(e)=>setText(e.target.value)}
       fullWidth
-      placeholder="Search Chalan Number"
+      placeholder="Search Design Code"
       endAdornment={
         <InputAdornment position="end">
           <IconButton
-            disabled={!chalanNumber}
+            disabled={!text}
             aria-label="toggle password visibility"
-            onClick={()=>handleSearch(chalanNumber)}
+            onClick={()=>handleSearch(text)}
             edge="end"
           >
           <SvgIcon color="action" fontSize="small">
