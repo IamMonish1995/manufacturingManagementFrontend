@@ -56,6 +56,7 @@ export const OrdersTable = (props) => {
           <TableHead>
             <TableRow>
               <TableCell>Distributor</TableCell>
+              <TableCell>SubDistributor</TableCell>
               <TableCell>Item Code</TableCell>
               {sizes && sizes.map((item, key) => <TableCell key={key}>{item?.name}</TableCell>)}
               <TableCell>Total</TableCell>
@@ -70,6 +71,9 @@ export const OrdersTable = (props) => {
                       <Typography variant="subtitle2">{row?.distributor}</Typography>
                     </TableCell>
                     <TableCell>
+                      <Typography variant="subtitle2">{row?.subDistributor}</Typography>
+                    </TableCell>
+                    <TableCell>
                       <Typography variant="subtitle2">{row?.item?.itemcode}</Typography>
                     </TableCell>
                     {row?.sizes &&
@@ -79,7 +83,7 @@ export const OrdersTable = (props) => {
                 );
               })}
             <TableRow>
-              <TableCell colSpan={2}>
+              <TableCell colSpan={3}>
                 <Button>Print Purchase Order</Button>
               </TableCell>
               {sizeCount?.map((item, key) => (

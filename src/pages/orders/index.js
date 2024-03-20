@@ -15,10 +15,12 @@ import DistributorFindOrCreateAutoComplete from "src/components/disctributorFind
 import { OrdersTable } from "src/sections/orders/orders-table";
 import { getorderbychalannumber, saveorder } from "request/orders";
 import { getrtlorderbychalannumber, savertlorder } from "request/rtlorders";
+import SubDistributorFindOrCreateAutoComplete from "src/components/subdisctributorFindOrCreateAutoComplete";
 
 const Page = () => {
   const [orderStock, setOrderStock] = useState({ items: [], grantTotal: 0 });
   const [distributorID, setDistributorID] = useState("");
+  const [subDistributorID, setSubDistributorID] = useState("");
   const [chalanNumber, setChalanNumber] = useState("");
   const [isRtlOrder, setisRtlOrder] = useState(false);
 
@@ -35,16 +37,14 @@ const Page = () => {
   }, []);
 
   const getOrderByChalanData = (searchNumber) => {
-    if (!searchNumber) {
-      return;
-    }
+
     if (isRtlOrder) {
       getrtlorderbychalannumber({ chalanNumber: searchNumber }).then((res) => {
         setOrderStock(res.result);
         setFilteredData(res.result.items);
       });
     } else {
-      getorderbychalannumber({ chalanNumber: searchNumber }).then((res) => {
+      getorderbychalannumber({ chalanNumber: searchNumber,distributorID,subDistributorID }).then((res) => {
         setOrderStock(res.result);
         setFilteredData(res.result.items);
       });
@@ -53,8 +53,7 @@ const Page = () => {
 
   const addOrder = (date, itemID, sizeQtyData) => {
     return new Promise(async (resolve, reject) => {
-      console.log(distributorID, date, itemID, sizeQtyData, chalanNumber);
-      if (!distributorID || !chalanNumber) {
+      if (!distributorID || !chalanNumber || !subDistributorID) {
         reject(false);
       } else {
         try {
@@ -64,7 +63,6 @@ const Page = () => {
             sizeQtyData.map(async (item) => {
               if (isRtlOrder) {
                 await savertlorder({
-                  distributorID: distributorID,
                   chalanNumber: chalanNumber,
                   itemID,
                   date,
@@ -73,6 +71,7 @@ const Page = () => {
                 });
               } else {
                 await saveorder({
+                  subDistributorID:subDistributorID,
                   distributorID: distributorID,
                   chalanNumber: chalanNumber,
                   itemID,
@@ -87,7 +86,6 @@ const Page = () => {
 
             if (isRtlOrder) {
               res = await savertlorder({
-                distributorID: distributorID,
                 chalanNumber: chalanNumber,
                 itemID,
                 date,
@@ -96,6 +94,7 @@ const Page = () => {
               });
             } else {
               res = await saveorder({
+                subDistributorID:subDistributorID,
                 distributorID: distributorID,
                 chalanNumber: chalanNumber,
                 itemID,
@@ -111,7 +110,6 @@ const Page = () => {
                   sizeQtyData.map(async (item, key) => {
                     if (key != 0) {
                       await savertlorder({
-                        distributorID: distributorID,
                         chalanNumber: chalanNumber,
                         itemID,
                         date,
@@ -124,6 +122,7 @@ const Page = () => {
                   sizeQtyData.map(async (item, key) => {
                     if (key != 0) {
                       await saveorder({
+                        subDistributorID:subDistributorID,
                         distributorID: distributorID,
                         chalanNumber: chalanNumber,
                         itemID,
@@ -155,7 +154,7 @@ const Page = () => {
     return () => {
       clearTimeout(debounceId);
     };
-  }, [chalanNumber,isRtlOrder]);
+  }, [chalanNumber, isRtlOrder,subDistributorID,distributorID]);
   return (
     <>
       <Box
@@ -186,9 +185,14 @@ const Page = () => {
             </Stack>
             <Stack direction="row" spacing={4}>
               {!isRtlOrder && (
-                <Stack spacing={1}>
-                  <DistributorFindOrCreateAutoComplete setDistributorID={setDistributorID} />
-                </Stack>
+                <>
+                  <Stack spacing={1}>
+                    <DistributorFindOrCreateAutoComplete setDistributorID={setDistributorID} />
+                  </Stack>
+                  <Stack spacing={1}>
+                    <SubDistributorFindOrCreateAutoComplete setSubDistributorID={setSubDistributorID} distributorID={distributorID} />
+                  </Stack>
+                </>
               )}
               <Stack spacing={1}>
                 <TextField
@@ -214,15 +218,17 @@ const Page = () => {
               />{" "}
             </div>
             {/* Inventory Table */}
-            {filteredData.length > 0 && <OrdersTable
-              orderStock={orderStock}
-              count={filteredData.length}
-              page={page}
-              rows={filteredData}
-              rowsPerPage={rowsPerPage}
-              onPageChange={onPageChange}
-              onRowsPerPageChange={onRowsPerPageChange}
-            />}
+            {filteredData.length > 0 && (
+              <OrdersTable
+                orderStock={orderStock}
+                count={filteredData.length}
+                page={page}
+                rows={filteredData}
+                rowsPerPage={rowsPerPage}
+                onPageChange={onPageChange}
+                onRowsPerPageChange={onRowsPerPageChange}
+              />
+            )}
           </Stack>
         </Container>
       </Box>
