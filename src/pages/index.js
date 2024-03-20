@@ -81,19 +81,22 @@ const Page = () => {
   }, []);
 
   const handleSearchItem = (searchStr) => {
-    let tempArray = curruntStock.items.filter((item) => {
+    let tempArray = curruntStock.items;
+    let filteredArray = tempArray.filter((item) => {
       return item.item?.itemcode.includes(searchStr);
     });
-    setFilteredData(tempArray);
+    setFilteredData(filteredArray);
   };
   useEffect(() => {
-    if(searchText){
+    if (searchText) {
       const debounceId = setTimeout(() => {
         handleSearchItem(searchText);
       }, 800);
       return () => {
         clearTimeout(debounceId);
       };
+    } else {
+      setFilteredData(curruntStock.items);
     }
   }, [searchText]);
   return (
