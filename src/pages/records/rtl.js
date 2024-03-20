@@ -13,26 +13,25 @@ import {
   TableRow,
   IconButton,
 } from "@mui/material";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 import { useCallback, useEffect, useState } from "react";
 import DistributorFindOrCreateAutoComplete from "src/components/disctributorFindOrCreateAutoComplete";
 import { getTodayDate } from "src/utils/changeDateFormate";
-import { getOrderByDistributorDateItem } from "request/records";
+import { getOrderByDistributorDateItem, getRtlOrderByDistributorDateItem } from "request/records";
 import { RecordsTable } from "src/sections/records/records-table";
 import ItemFindOrCreateAutoComplete from "src/components/ItemFindOrCreateAutoComplete";
 import SearchIcon from "@mui/icons-material/Search";
 import SubDistributorFindOrCreateAutoComplete from "src/components/subdisctributorFindOrCreateAutoComplete";
+import { RtlRecordsTable } from "src/sections/records/rtlrecords-table";
 
 const Page = () => {
   const [stocks, setStocks] = useState({ items: [], grantTotal: 0 });
-  const [distributorID, setDistributorID] = useState("");
-  const [subDistributorID, setSubDistributorID] = useState("");
   const [itemID, setItemID] = useState("");
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState(getTodayDate());
   const [chalanNumber, setChalanNumber] = useState("");
-  const router = useRouter()
+  const router = useRouter();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filteredData, setFilteredData] = useState([]);
@@ -46,10 +45,8 @@ const Page = () => {
   }, []);
 
   const getOrderByItemDistData = () => {
-    getOrderByDistributorDateItem({
-      distributorID,
+    getRtlOrderByDistributorDateItem({
       chalanNumber,
-      subDistributorID,
       itemID,
       fromDate,
       toDate,
@@ -75,8 +72,13 @@ const Page = () => {
                 <Typography variant="h4">Records</Typography>
               </Stack>
               <Stack spacing={1}>
-                <Button onClick={() => {router.push('/records/rtl')}} variant="contained">
-                  RTL Records
+                <Button
+                  onClick={() => {
+                    router.push("/records");
+                  }}
+                  variant="contained"
+                >
+                  Distributor Records
                 </Button>
               </Stack>
             </Stack>
@@ -94,15 +96,6 @@ const Page = () => {
                         setChalanNumber(e.target.value);
                       }}
                       value={chalanNumber}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <DistributorFindOrCreateAutoComplete setDistributorID={setDistributorID} />
-                  </TableCell>
-                  <TableCell>
-                    <SubDistributorFindOrCreateAutoComplete
-                      distributorID={distributorID}
-                      setSubDistributorID={setSubDistributorID}
                     />
                   </TableCell>
                   <TableCell>
@@ -146,7 +139,7 @@ const Page = () => {
             </Table>
 
             {filteredData.length > 0 && (
-              <RecordsTable
+              <RtlRecordsTable
                 stocks={stocks}
                 count={filteredData.length}
                 page={page}
