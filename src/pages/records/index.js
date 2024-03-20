@@ -20,13 +20,16 @@ import { getOrderByDistributorDateItem } from "request/records";
 import { RecordsTable } from "src/sections/records/records-table";
 import ItemFindOrCreateAutoComplete from "src/components/ItemFindOrCreateAutoComplete";
 import SearchIcon from "@mui/icons-material/Search";
+import SubDistributorFindOrCreateAutoComplete from "src/components/subdisctributorFindOrCreateAutoComplete";
 
 const Page = () => {
   const [stocks, setStocks] = useState({ items: [], grantTotal: 0 });
   const [distributorID, setDistributorID] = useState("");
+  const [subDistributorID, setSubDistributorID] = useState("");
   const [itemID, setItemID] = useState("");
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState(getTodayDate());
+  const [chalanNumber, setChalanNumber] = useState("");
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -41,20 +44,17 @@ const Page = () => {
   }, []);
 
   const getOrderByItemDistData = () => {
-    if (!fromDate || !toDate) {
-      alert("select dates");
-    } else {
-      if(!distributorID && !itemID){
-        alert("select distributor or Item");
-      }else{
-        getOrderByDistributorDateItem({ distributorID, itemID, fromDate, toDate }).then((res) => {
-       console.log(res);
-          // setStocks(res.result);
-        // setFilteredData(res.result.items);
-      });
-      }
-      
-    }
+    getOrderByDistributorDateItem({
+      distributorID,
+      chalanNumber,
+      subDistributorID,
+      itemID,
+      fromDate,
+      toDate,
+    }).then((res) => {
+      setStocks(res.result);
+      setFilteredData(res.result.items);
+    });
   };
 
   return (
@@ -78,7 +78,25 @@ const Page = () => {
               <TableBody>
                 <TableRow>
                   <TableCell>
+                    <TextField
+                      id="outlined-basic"
+                      name="chalanNumber"
+                      label="Enter Challan Number"
+                      variant="standard"
+                      onChange={(e) => {
+                        setChalanNumber(e.target.value);
+                      }}
+                      value={chalanNumber}
+                    />
+                  </TableCell>
+                  <TableCell>
                     <DistributorFindOrCreateAutoComplete setDistributorID={setDistributorID} />
+                  </TableCell>
+                  <TableCell>
+                    <SubDistributorFindOrCreateAutoComplete
+                      distributorID={distributorID}
+                      setSubDistributorID={setSubDistributorID}
+                    />
                   </TableCell>
                   <TableCell>
                     <ItemFindOrCreateAutoComplete setItemID={setItemID} />

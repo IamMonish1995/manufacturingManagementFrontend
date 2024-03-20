@@ -35,10 +35,7 @@ const Page = () => {
   }, []);
 
   const getDispatchByChalanData = (searchNumber) => {
-    if (!searchNumber) {
-      return;
-    }
-    getdispatchbychalannumber({ chalanNumber: searchNumber }).then((res) => {
+    getdispatchbychalannumber({ chalanNumber: searchNumber,distributorID,subDistributorID }).then((res) => {
       setDispatchStock(res.result);
       setFilteredData(res.result.items);
     });
@@ -112,7 +109,7 @@ const Page = () => {
     return () => {
       clearTimeout(debounceId);
     };
-  }, [chalanNumber]);
+  }, [chalanNumber,subDistributorID,distributorID]);
   return (
     <>
       <Box
