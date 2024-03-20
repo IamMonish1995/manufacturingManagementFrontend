@@ -37,23 +37,24 @@ const Page = () => {
   }, []);
 
   const getOrderByChalanData = (searchNumber) => {
-
     if (isRtlOrder) {
       getrtlorderbychalannumber({ chalanNumber: searchNumber }).then((res) => {
         setOrderStock(res.result);
         setFilteredData(res.result.items);
       });
     } else {
-      getorderbychalannumber({ chalanNumber: searchNumber,distributorID,subDistributorID }).then((res) => {
-        setOrderStock(res.result);
-        setFilteredData(res.result.items);
-      });
+      getorderbychalannumber({ chalanNumber: searchNumber, distributorID, subDistributorID }).then(
+        (res) => {
+          setOrderStock(res.result);
+          setFilteredData(res.result.items);
+        }
+      );
     }
   };
 
   const addOrder = (date, itemID, sizeQtyData) => {
     return new Promise(async (resolve, reject) => {
-      if (!distributorID || !chalanNumber || !subDistributorID) {
+      if (!chalanNumber) {
         reject(false);
       } else {
         try {
@@ -70,15 +71,19 @@ const Page = () => {
                   qty: item.qty,
                 });
               } else {
-                await saveorder({
-                  subDistributorID:subDistributorID,
-                  distributorID: distributorID,
-                  chalanNumber: chalanNumber,
-                  itemID,
-                  date,
-                  sizeID: item.sizeID,
-                  qty: item.qty,
-                });
+                if (!subDistributorID || !distributorID) {
+                  reject(false);
+                } else {
+                  await saveorder({
+                    subDistributorID: subDistributorID,
+                    distributorID: distributorID,
+                    chalanNumber: chalanNumber,
+                    itemID,
+                    date,
+                    sizeID: item.sizeID,
+                    qty: item.qty,
+                  });
+                }
               }
             });
           } else {
@@ -93,15 +98,19 @@ const Page = () => {
                 qty: sizeQtyData[0].qty,
               });
             } else {
-              res = await saveorder({
-                subDistributorID:subDistributorID,
-                distributorID: distributorID,
-                chalanNumber: chalanNumber,
-                itemID,
-                date,
-                sizeID: sizeQtyData[0].sizeID,
-                qty: sizeQtyData[0].qty,
-              });
+              if (!subDistributorID || !distributorID) {
+                reject(false);
+              } else {
+                res = await saveorder({
+                  subDistributorID: subDistributorID,
+                  distributorID: distributorID,
+                  chalanNumber: chalanNumber,
+                  itemID,
+                  date,
+                  sizeID: sizeQtyData[0].sizeID,
+                  qty: sizeQtyData[0].qty,
+                });
+              }
             }
 
             if (res.status == "success") {
@@ -121,15 +130,19 @@ const Page = () => {
                 } else {
                   sizeQtyData.map(async (item, key) => {
                     if (key != 0) {
-                      await saveorder({
-                        subDistributorID:subDistributorID,
-                        distributorID: distributorID,
-                        chalanNumber: chalanNumber,
-                        itemID,
-                        date,
-                        sizeID: item.sizeID,
-                        qty: item.qty,
-                      });
+                      if (!subDistributorID || !distributorID) {
+                        reject(false);
+                      } else {
+                        await saveorder({
+                          subDistributorID: subDistributorID,
+                          distributorID: distributorID,
+                          chalanNumber: chalanNumber,
+                          itemID,
+                          date,
+                          sizeID: item.sizeID,
+                          qty: item.qty,
+                        });
+                      }
                     }
                   });
                 }
@@ -154,7 +167,7 @@ const Page = () => {
     return () => {
       clearTimeout(debounceId);
     };
-  }, [chalanNumber, isRtlOrder,subDistributorID,distributorID]);
+  }, [chalanNumber, isRtlOrder, subDistributorID, distributorID]);
   return (
     <>
       <Box
@@ -190,7 +203,10 @@ const Page = () => {
                     <DistributorFindOrCreateAutoComplete setDistributorID={setDistributorID} />
                   </Stack>
                   <Stack spacing={1}>
-                    <SubDistributorFindOrCreateAutoComplete setSubDistributorID={setSubDistributorID} distributorID={distributorID} />
+                    <SubDistributorFindOrCreateAutoComplete
+                      setSubDistributorID={setSubDistributorID}
+                      distributorID={distributorID}
+                    />
                   </Stack>
                 </>
               )}
