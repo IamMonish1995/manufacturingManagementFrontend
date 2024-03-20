@@ -46,6 +46,15 @@ export const items = [
     )
   },
   {
+    title: 'RtlRecord',
+    path: '/records/rtl',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UserIcon />
+      </SvgIcon>
+    )
+  },
+  {
     title: 'Others',
     path: '/settings',
     icon: (
