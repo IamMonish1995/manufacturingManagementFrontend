@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { UseConstants } from "src/contexts/constants-context";
 import { useEffect, useState } from "react";
+import PrintModal from "src/components/printModal";
 
 export const InventoryTable = (props) => {
   const {
@@ -30,6 +31,8 @@ export const InventoryTable = (props) => {
   const { sizes } = UseConstants();
 
   const [sizeCount, setSizeCount] = useState([]);
+  const [openPrintModal, setOpenPrintModal] = useState(false);
+  const [printingData, setPrintingData] = useState(null);
 
   useEffect(() => {
     rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, key) => {
@@ -46,62 +49,84 @@ export const InventoryTable = (props) => {
         });
       });
     });
+    setPrintingData({
+      finalCountRow: sizeCount,
+      stockData: curruntStock,
+    });
     return () => {
       setSizeCount([]);
     };
   }, [rows]);
 
   return (
-    <Card>
-      <Box sx={{ overflowX: "auto" }}>
-        <Table sx={{ minWidth: "800px" }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Design Code</TableCell>
-              {sizes &&
-                sizes.map((item, key) => {
-                  return <TableCell key={key}>{item?.name}</TableCell>;
-                })}
-              <TableCell>Total</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {curruntStock &&
-              rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, key) => {
-                return (
-                  <TableRow hover key={key}>
-                    <TableCell>
-                      <Typography variant="subtitle2">{row?.item?.itemcode}</Typography>
-                    </TableCell>
-                    {row?.sizes &&
-                      row?.sizes?.map((item, key) => <TableCell key={key}>{item?.qty}</TableCell>)}
-                    <TableCell>{row?.totalqty}</TableCell>
-                  </TableRow>
-                );
-              })}
-            <TableRow>
-              <TableCell>
-                <Button>Print</Button>
-              </TableCell>
-              {sizeCount?.map((item, key) => (
-                <TableCell key={key}>{item}</TableCell>
-              ))}
-              <TableCell>Total : {curruntStock.grantTotal}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Box>
-      <Divider />
-      <TablePagination
-        component="div"
-        count={count}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
+    <>
+      <PrintModal
+        title="Inventory"
+        data={printingData}
+        setOpen={setOpenPrintModal}
+        open={openPrintModal}
       />
-    </Card>
+      <Card>
+        <Box sx={{ overflowX: "auto" }}>
+          <Table sx={{ minWidth: "800px" }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Design Code</TableCell>
+                {sizes &&
+                  sizes.map((item, key) => {
+                    return <TableCell key={key}>{item?.name}</TableCell>;
+                  })}
+                <TableCell>Total</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {curruntStock &&
+                rows
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, key) => {
+                    return (
+                      <TableRow hover key={key}>
+                        <TableCell>
+                          <Typography variant="subtitle2">{row?.item?.itemcode}</Typography>
+                        </TableCell>
+                        {row?.sizes &&
+                          row?.sizes?.map((item, key) => (
+                            <TableCell key={key}>{item?.qty}</TableCell>
+                          ))}
+                        <TableCell>{row?.totalqty}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+              <TableRow>
+                <TableCell>
+                  <Button
+                    onClick={() => {
+                      setOpenPrintModal(true);
+                    }}
+                  >
+                    Print
+                  </Button>
+                </TableCell>
+                {sizeCount?.map((item, key) => (
+                  <TableCell key={key}>{item}</TableCell>
+                ))}
+                <TableCell>Total : {curruntStock.grantTotal}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Box>
+        <Divider />
+        <TablePagination
+          component="div"
+          count={count}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[5, 10, 25]}
+          onPageChange={onPageChange}
+          onRowsPerPageChange={onRowsPerPageChange}
+        />
+      </Card>
+    </>
   );
 };
 
