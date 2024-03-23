@@ -18,7 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 import { UseConstants } from "src/contexts/constants-context";
-import { format } from "date-fns";
+import { getTodayDate } from "src/utils/changeDateFormate";
+import moment from "moment";
 
 export default function PrintModal({ data, open, setOpen, title }) {
   const { sizes } = UseConstants();
@@ -55,8 +56,26 @@ export default function PrintModal({ data, open, setOpen, title }) {
                   spacing={{ xs: 2, md: 3 }}
                 >
                   <Grid item xs={2} sm={2} md={2}>
-                    Date - {format(data?.stockData.items[0].date, 'dd/MM/yyyy')}
+                    Date -{" "}
+                    {data?.stockData.items[0]?.date
+                      ? moment(data?.stockData.items[0].date).format("DD-MM-YYYY")
+                      : getTodayDate()}
                   </Grid>
+                  {data?.stockData.items[0]?.subDistributor && (
+                    <Grid item xs={2} sm={2} md={2}>
+                      Sub Distributor - {data?.stockData.items[0]?.subDistributor}
+                    </Grid>
+                  )}
+                  {data?.stockData.items[0]?.distributor && (
+                    <Grid item xs={2} sm={2} md={2}>
+                      Distributor - {data?.stockData.items[0]?.distributor}
+                    </Grid>
+                  )}
+                  {data?.stockData.items[0]?.chalanNumber && (
+                    <Grid item xs={2} sm={2} md={2}>
+                      Chalan Number - {data?.stockData.items[0]?.chalanNumber}
+                    </Grid>
+                  )}
                 </Grid>
                 <Divider />
                 <Table>

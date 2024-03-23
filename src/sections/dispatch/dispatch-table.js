@@ -48,22 +48,30 @@ export const DispatchTable = (props) => {
         });
       });
     });
-    setPrintingData({
-      finalCountRow: sizeCount,
-      stockData: dispatchStock,
-    });
+   
     return () => {
       setSizeCount([]);
     };
   }, [rows]);
+
+
+  useEffect(() => {
+    setPrintingData({
+      finalCountRow: sizeCount,
+      stockData: dispatchStock,
+    });
+  }, [sizeCount])
+  
+
+
   return (
     <>
-      <PrintModal
+      {openPrintModal &&<PrintModal
         title="Invoice"
         data={printingData}
         setOpen={setOpenPrintModal}
         open={openPrintModal}
-      />
+      />}
       <Card>
         <Box sx={{ overflowX: "auto" }}>
           <Table sx={{ minWidth: "800px" }}>

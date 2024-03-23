@@ -49,23 +49,28 @@ export const InventoryTable = (props) => {
         });
       });
     });
-    setPrintingData({
-      finalCountRow: sizeCount,
-      stockData: curruntStock,
-    });
+    
     return () => {
       setSizeCount([]);
     };
   }, [rows]);
 
+
+  useEffect(() => {
+    setPrintingData({
+      finalCountRow: sizeCount,
+      stockData: curruntStock,
+    });
+  }, [sizeCount]);
+
   return (
     <>
-      <PrintModal
+      {openPrintModal &&<PrintModal
         title="Inventory"
         data={printingData}
         setOpen={setOpenPrintModal}
         open={openPrintModal}
-      />
+      />}
       <Card>
         <Box sx={{ overflowX: "auto" }}>
           <Table sx={{ minWidth: "800px" }}>
