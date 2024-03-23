@@ -202,12 +202,12 @@ const Page = () => {
                   <Stack spacing={1}>
                     <DistributorFindOrCreateAutoComplete setDistributorID={setDistributorID} />
                   </Stack>
-                  <Stack spacing={1}>
+                  {distributorID && <Stack spacing={1}>
                     <SubDistributorFindOrCreateAutoComplete
                       setSubDistributorID={setSubDistributorID}
                       distributorID={distributorID}
                     />
-                  </Stack>
+                  </Stack>}
                 </>
               )}
               <Stack spacing={1}>
