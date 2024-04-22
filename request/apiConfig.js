@@ -1,3 +1,2 @@
-const MAIN_URL = "https://manufacturingmanagementbackend.onrender.com/api"
-// const MAIN_URL = "http://localhost:8000/api"
-export default MAIN_URL
+let MAIN_URL = process.env.NEXT_PUBLIC_BACKEND_API + "/api";
+export default MAIN_URL;
